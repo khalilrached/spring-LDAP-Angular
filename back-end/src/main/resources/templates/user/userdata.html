@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>About</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<!--nav-bar-->
+<nav class="nav-bar">
+    <img src="/img/leoni.png" width="150" alt="logo">
+    <ul>
+        <li><a th:href="@{http://localhost:8080/home}">Home</a></li>
+        <li><a th:href="@{http://localhost:8080/about}">about</a></li>
+        <li><a th:href="@{http://localhost:8080/user}">User</a></li>
+    </ul>
+</nav>
+<!--end-of-nav-bar-->
+
+<div class="center">
+    <div class="user" >
+        <p>this data only appear to authenticated user</p>
+    </div>
+</div>
+
+</body>
+</html>
