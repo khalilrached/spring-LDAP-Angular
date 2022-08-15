@@ -5,26 +5,57 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>About</title>
+    <title>User data</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <!--nav-bar-->
 <nav class="nav-bar">
-    <img src="/img/leoni.png" width="150" alt="logo">
-    <ul>
-        <li><a th:href="@{http://localhost:8080/home}">Home</a></li>
-        <li><a th:href="@{http://localhost:8080/about}">about</a></li>
-        <li><a th:href="@{http://localhost:8080/user}">User</a></li>
+    <a th:href="@{/}"><img src="/img/leoni.png" width="150" alt="logo"></a>
+    <ul class="nav-bar-item">
+        <li><a class="links" th:href="@{http://localhost:8080/home}">Home</a></li>
+        <li><a class="links" th:href="@{http://localhost:8080/about}">about</a></li>
+        <li><a class="links" th:href="@{http://localhost:8080/user?link}">User</a></li>
+        <li id="menu" ><a href="#menu"><img height="30px" src="img/menu.png"></a></li>
+        <li ><a style="padding:0px 10px;" th:href="@{/user/logout}">logout</a></li>
+        <li class="bar-menu-container">
+            <ul class="bar-menu nav-bar-item">
+                <li class="nav-btns">
+                    <div class="nav-header">Head1</div>
+                    <ul class="nav-btns">
+                        <li><a th:href="@{/user?link=head1-link1}">link1</a></li>
+                        <li><a th:href="@{/user?link=head1-link2}">link2</a></li>
+                        <li><a th:href="@{/user?link=head1-link3}">link</a></li>
+                    </ul>
+                </li>
+                <li class="nav-btns">
+                    <div class="nav-header">Head2</div>
+                    <ul class="nav-btns">
+                        <li><a th:href="@{/user?link=head2-link1}">link1</a></li>
+                        <li><a th:href="@{/user?link=head2-link2}">link2</a></li>
+                        <li><a th:href="@{/user?link=head2-link3}">link3</a></li>
+                    </ul>
+                </li>
+                <li class="nav-btns">
+                    <div class="nav-header">Head3</div>
+                    <ul class="nav-btns">
+                        <li><a th:href="@{/user?link=head3-link1}">link1</a></li>
+                        <li><a th:href="@{/user?link=head3-link2}">link2</a></li>
+                        <li><a th:href="@{/user?link=head3-link3}">link3</a></li>
+                    </ul>
+                </li>                  
+            </ul>
+        </li>
     </ul>
 </nav>
 <!--end-of-nav-bar-->
 
 <div class="center">
     <div class="user" >
+        <div th:text="${message}"></div>
         <p>this data only appear to authenticated user</p>
     </div>
 </div>
-
+<script src="/js/main.js"></script>
 </body>
 </html>

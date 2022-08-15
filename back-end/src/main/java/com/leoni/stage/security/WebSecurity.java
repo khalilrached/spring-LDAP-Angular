@@ -16,14 +16,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/login*","/","/css/**","/img/**","/about","/home").permitAll()
+            .antMatchers("/login*","/","/css/**","/img/**","/about","/js/**","/home").permitAll()
             .anyRequest()
             .authenticated()
         .and()
             .formLogin()
-            .loginPage("/loginpage.html")
+            .loginPage("/loginpage")
             .loginProcessingUrl("/applogin")
-            .defaultSuccessUrl("/hello")
+            .defaultSuccessUrl("/user")
+            .failureUrl("/loginpage.html?error=true")
+        .and()
+            .logout()
+            .logoutUrl("/user/logout")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID")
         ;
     }
 
@@ -39,6 +45,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .passwordCompare()
             .passwordEncoder(new BCryptPasswordEncoder())
             .passwordAttribute("userPassword")
+        .and()
+
         ;
     }
 

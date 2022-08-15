@@ -17,6 +17,7 @@
 
 .nav-bar{
     padding: 20px;
+    height: 60px;
     width: 100vw;
     position: fixed;
     display: flex;
@@ -26,27 +27,34 @@
 
 .nav-bar ul{
     list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 15%;
     height: 100%;
 }
 
+.nav-bar .nav-bar-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .nav-bar ul li a {
-    text-decoration: none;
+    text-decoration: none; 
+    color: black;
+    letter-spacing: 1px;
+}
+
+.links{
     font-size: 28px;
     font-weight: bolder;
     letter-spacing: 1px;
     padding: 10px 20px;
-    color: rgb(7, 36, 206);
+    color: rgb(7, 36, 206) !important;
 }
 
-.nav-bar ul li a:hover{
-    background-color: white;
+.links:hover{
+    background-color: white !important;
     padding: 10px 20px;
     border-radius: 26px;
-    color: black;
+    color: black !important;
 }
 .home.container{
     height: 100vh;
@@ -88,6 +96,7 @@
     align-items: center;
     bottom: 100px;
     font-size: 26px;
+    flex-direction: column;
 }
 .center{
     position: fixed;
@@ -98,3 +107,68 @@
     align-items: center;
     bottom: 150px;
 }
+
+.error{
+    background-color: rgb(247, 47, 47);
+    color: white;
+    border: 3px solid rgb(253, 213, 213);
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+
+/*menu styling*/
+.bar-menu-container{
+    height: 0px;
+    position: absolute;
+    width: 100vw;
+    left: 0;
+    top:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(241, 241, 241);
+    overflow: hidden;
+    transition: all 1s; 
+}
+.bar-menu{
+    width: 40vw;
+    padding: 30px;
+}
+
+.nav-btns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    padding: 10px;
+}
+
+.nav-btns li, .nav-header{
+    border-radius: 5px;
+    width: 10vw;
+    text-align: center;
+}
+
+ .nav-btns li:hover, .nav-header:hover{
+    background-color: rgb(61, 194, 255);
+}
+
+.nav-btns li {
+    padding: 4px 0px;
+}
+
+.nav-header{
+    letter-spacing: 2px;
+    font-size: 30px;
+    padding: 10px 0px;
+}
+
+.bar-menu-container.active{
+    height: auto;
+    background-color: rgb(241, 241, 241);
+}
+
+
