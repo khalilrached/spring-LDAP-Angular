@@ -1,21 +1,25 @@
 package com.leoni.stage.controller;
 
 
-
-import org.springframework.boot.Banner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.websocket.server.PathParam;
 
 @Controller
 public class UserController {
+
+    Logger logger = LogManager.getLogger(UserController.class);
+
     @RequestMapping("/home")
     public String home(){
+        logger.info("info level work");
+        logger.debug("debug level work");
+        logger.warn("warn level work");
         return "home";
     }
     @RequestMapping("/about")
