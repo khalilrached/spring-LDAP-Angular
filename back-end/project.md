@@ -61,7 +61,7 @@
 
 #
 # 6.  creation d'interface:
-    html:
+## -    html:
 ###        creation de 4 page .html
 -   [about.html](https://github.com/khalilrached/spring-LDAP-Angular/blob/master/back-end/src/main/resources/templates/about.html)
 -   [home.html](https://github.com/khalilrached/spring-LDAP-Angular/blob/master/back-end/src/main/resources/templates/home.html)
