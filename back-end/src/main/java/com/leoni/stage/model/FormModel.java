@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Setter
@@ -19,28 +22,27 @@ public class FormModel {
     private String shortTextField;
     private Boolean radioButton;
     private String readOnlyTextInput;
-    private File fileInput;
+    private MultipartFile fileInput;
     private List<String> autoCompleteData;
 
 
     public FormModel(){
-        shortTextField = "undefined";
-        radioButton = false;
-        readOnlyTextInput = "exp: fetched data from db!";
-        fileInput = null;
-        autoCompleteData = new ArrayList<>();
+        this.shortTextField = "undefined";
+        this.radioButton = true;
+        this.readOnlyTextInput = "exp: fetched data from db!";
+        this.fileInput = null;
+        this.autoCompleteData = new ArrayList<>();
     }
+
 
     public FormModel(String shortTextField,
                      Boolean radioButton,
-                     String readOnlyTextInput,
-                     File fileInput,
-                     List<String> autoCompleteData){
+                     MultipartFile fileInput){
         this.shortTextField = shortTextField;
         this.radioButton = radioButton ;
-        this.readOnlyTextInput = readOnlyTextInput;
+        this.readOnlyTextInput = "exp: fetched data from db!";
         this.fileInput = fileInput;
-        this.autoCompleteData = autoCompleteData;
+        this.autoCompleteData =new ArrayList<>();
     }
 
     public void fetchAutoCompleteData(){
@@ -94,4 +96,24 @@ public class FormModel {
         return _TEMP_REF.get();
     }
 
+    public Map<String,Object> view(){
+        HashMap<String,Object> attributes = new HashMap<>();
+        attributes.put("textField",this.shortTextField);
+        attributes.put("radioBtn",this.radioButton);
+        attributes.put("readOnlyInput",this.readOnlyTextInput);
+        return attributes;
+    }
+
+    @Override
+    public String toString(){
+        return
+                "{" +
+                    "\"shortTextField\":\"" +this.shortTextField+"\","+
+                    "\"readOnlyTextInput\":\"" +this.readOnlyTextInput+"\","+
+                    "\"radioButton\":"+this.radioButton+","+
+                    "\"file\":" +"{" +
+                                    "\"fileName\":\"" +this.fileInput.getOriginalFilename()+
+                                "\"}" +
+                "}";
+    }
 }
