@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&family=Roboto&family=Roboto+Mono&display=swap');
 *{
     margin: 0px;
     padding:0px;
@@ -16,13 +17,20 @@
 }
 
 .nav-bar{
+    z-index: 1000;
     padding: 20px;
     height: 60px;
     width: 100vw;
     position: fixed;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    user-select: none;
 }
 
 .nav-bar ul{
@@ -34,6 +42,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 20px;
 }
 
 .nav-bar ul li a {
@@ -47,7 +56,7 @@
     font-weight: bolder;
     letter-spacing: 1px;
     padding: 10px 20px;
-    color: rgb(7, 36, 206) !important;
+    color: rgb(9, 9, 9) !important;
 }
 
 .links:hover{
@@ -120,6 +129,7 @@
 
 /*menu styling*/
 .bar-menu-container{
+    transform: translateY(35px);
     height: 0px;
     position: absolute;
     width: 100vw;
@@ -172,3 +182,103 @@
 }
 
 
+/*form styiling*/
+
+.form-container{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    width: 100vw;
+    height: 100vh;
+}
+
+.form{
+    background-color: rgb(188, 229, 246);
+    border-radius: 10px;
+    padding: 70px 50px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    gap: 30px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: 35vw;
+}
+
+.form label{
+    user-select: none;
+}
+
+.data-list{
+    max-height:280px ;
+    width: 100%;
+    text-transform: none;
+    background-color: rgb(235, 235, 235);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 0px 0px 5px 5px;
+    overflow-y: scroll;
+}
+
+.data-value{
+    padding: 5px;
+    padding-left: 5px;
+}
+
+.submit-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-btn input{
+    font-size: 22px;
+    border: none;
+    height:50px;
+    width: 100px;
+    margin-top: 50px;
+    background-color: rgb(107, 156, 247);
+    color: white;
+    border-radius: 25px;
+}
+
+.align{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.align-width{
+    height: 35px;
+    width: 400px;
+}
+
+.field input{
+    font-family: 'Roboto Mono', monospace;
+    font-size: 24px;
+    width: 400px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.auto {
+    position: absolute;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0px;
+}
+.header-center{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 80px;
+}
+
+.read-only input { 
+    background-color: rgb(147, 147, 147);
+}
