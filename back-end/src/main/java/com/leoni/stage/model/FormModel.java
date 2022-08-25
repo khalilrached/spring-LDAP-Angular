@@ -23,7 +23,8 @@ public class FormModel {
     private Boolean radioButton;
     private String readOnlyTextInput;
     private MultipartFile fileInput;
-    private List<String> autoCompleteData;
+    private String autoCompleteField;
+    public List<String> autoCompleteData = new ArrayList<>();
 
 
     public FormModel(){
@@ -31,18 +32,21 @@ public class FormModel {
         this.radioButton = true;
         this.readOnlyTextInput = "exp: fetched data from db!";
         this.fileInput = null;
-        this.autoCompleteData = new ArrayList<>();
+        this.autoCompleteField = "nothing";
+        this.fetchAutoCompleteData();
     }
 
 
     public FormModel(String shortTextField,
                      Boolean radioButton,
-                     MultipartFile fileInput){
+                     MultipartFile fileInput,
+                     String autoCompleteField){
         this.shortTextField = shortTextField;
         this.radioButton = radioButton ;
         this.readOnlyTextInput = "exp: fetched data from db!";
         this.fileInput = fileInput;
-        this.autoCompleteData =new ArrayList<>();
+        this.autoCompleteField = autoCompleteField;
+        this.fetchAutoCompleteData();
     }
 
     public void fetchAutoCompleteData(){
@@ -76,7 +80,7 @@ public class FormModel {
         data.add("string6");
         data.add("string7");
         data.add("string8");
-        this.setAutoCompleteData(data);
+        autoCompleteData=data;
     }
 
     public void setReadOnlyTextInput(String readOnlyTextInput) {
@@ -86,7 +90,7 @@ public class FormModel {
     public List<String> matchAutoCompleteData(String searchToken){
         AtomicReference<List<String>> _TEMP_REF = new AtomicReference<>();
         _TEMP_REF.set(new ArrayList<>());
-        this.autoCompleteData.forEach(data -> {
+        autoCompleteData.forEach(data -> {
             if(data.contains(searchToken)){
                 List<String> _TEMP_LIST = _TEMP_REF.get();
                 _TEMP_LIST.add(data);
@@ -113,7 +117,8 @@ public class FormModel {
                     "\"radioButton\":"+this.radioButton+","+
                     "\"file\":" +"{" +
                                     "\"fileName\":\"" +this.fileInput.getOriginalFilename()+
-                                "\"}" +
+                                "\"}," +
+                    "\"autoComplete\":\""+this.autoCompleteField+"\n"+
                 "}";
     }
 }
