@@ -1,19 +1,19 @@
-const btn = document.getElementById('menu');
-const dropMenu = document.querySelector(".bar-menu-container");
-console.log(dropMenu)
-btn.addEventListener('click',()=>{
-    console.log('here')
+function showMenu(elem){
+    const dropMenu = document.querySelector(".bar-menu-container");
     if(dropMenu.classList.contains('active')){
-        console.log('true')
         dropMenu.classList.remove('active');
     }else{
-        console.log('false')
         dropMenu.classList.add('active');
     }
-})
+}
 
-function fetchData(){
-    console.log("we are in fetch func !");
+function isSelected(elem){
+    const text = document.getElementById('text');
+    text.value = elem.innerHTML.toString();
+    init();
+}
+
+async function fetchData(){
     const text = document.getElementById('text');
     const dataList = document.getElementById('data');
     dataList.innerHTML = "";
@@ -21,14 +21,23 @@ function fetchData(){
         "searchToken":text.value
     }
     console.log('data value:' , text.value);
-    fetch('http://localhost:8080/form/autoCompleteData/'+text.value)
-    .then((response)=>response.json())
-    .then((data)=>{
-       data.forEach(element => {
-            dataList.innerHTML += `<option vlaue="${element}"> ${element} </option>`
-       }); 
-    })
-    .catch((err)=>{
-        console.error(err);
-    })    
+    const response = await fetch('http://localhost:8080/form/autoCompleteData/'+text.value);
+    var data = await response.json();
+    data.forEach((element,index) => {
+        dataList.innerHTML += `<div class="data-value" onclick="isSelected(this)" >${element}</div>`;
+    });  
 }
+
+function init(){
+    const dataList = document.getElementById('data');
+    dataList.innerHTML = "";
+}
+
+window.addEventListener('click',(event)=>{
+    const dataList = document.getElementById('data');
+    if(!event.target.classList.contains('data-value')){
+        if(dataList.innerHTML!=""){
+            dataList.innerHTML="";
+        }
+    }
+})
