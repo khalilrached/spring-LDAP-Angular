@@ -45,8 +45,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .passwordCompare()
             .passwordEncoder(new BCryptPasswordEncoder())
             .passwordAttribute("userPassword")
-        .and()
-
         ;
     }
 
