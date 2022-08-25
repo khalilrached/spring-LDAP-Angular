@@ -24,7 +24,7 @@ async function fetchData(){
     const response = await fetch('http://localhost:8080/form/autoCompleteData/'+text.value);
     var data = await response.json();
     data.forEach((element,index) => {
-        dataList.innerHTML += `<div class="data-value" onclick="isSelected(this)" >${element}</div>`;
+        dataList.innerHTML += `<div class="px-2 p-1 " onclick="isSelected(this)" >${element}</div>`;
     });  
 }
 

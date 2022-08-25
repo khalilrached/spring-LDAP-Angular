@@ -29,7 +29,7 @@ public class FormModel {
 
     public FormModel(){
         this.shortTextField = "undefined";
-        this.radioButton = true;
+        this.radioButton = false;
         this.readOnlyTextInput = "exp: fetched data from db!";
         this.fileInput = null;
         this.autoCompleteField = "nothing";

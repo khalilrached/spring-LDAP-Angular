@@ -3,84 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>form submit</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="nav-bar">
-        <a th:href="@{/}"><img src="/img/leoni.png" width="150" alt="logo"></a>
-        <ul class="nav-bar-item">
-            <li><a class="links" th:href="@{/home}">Home</a></li>
-            <li><a class="links" th:href="@{/about}">about</a></li>
-            <li><a class="links" th:href="@{/user?link}">User</a></li>
-            <li onclick="showMenu(this)" id="menu" ><a href="#menu">admin</a></li>
-            <li class="bar-menu-container">
-                <ul class="bar-menu nav-bar-item">
-                    <li class="nav-btns">
-                        <div class="nav-header">Head1</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head1-link1}">link1</a></li>
-                            <li><a th:href="@{/user?link=head1-link2}">link2</a></li>
-                            <li><a th:href="@{/user?link=head1-link3}">link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-btns">
-                        <div class="nav-header">Head2</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head2-link1}">link</a></li>
-                            <li><a th:href="@{/user?link=head2-link2}">link</a></li>
-                            <li><a th:href="@{/user?link=head2-link3}">link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-btns">
-                        <div class="nav-header">Head3</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head3-link1}">link1</a></li>
-                            <li><a th:href="@{/user?link=head3-link2}">link2</a></li>
-                            <li><a th:href="@{/user?link=head3-link3}">link3</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+    <nav class="navbar navbar navbar-expand-lg navbar-dark" style="z-index: 1000;background-color: rgb(33, 33, 33);" >
+        <a class="navbar-brand px-2" th:href="@{/}"><img src="/img/leoni.png" width="120" alt="logo"></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-link" ><a th:href="@{/home}">Home</a></li>
+                <li class="nav-link" ><a th:href="@{/about}">about</a></li>
+                <li class="nav-link active" ><a th:href="@{/user?link}">User</a></li>
+            </ul>
+        </div>
+        <div class="dropdown d-flex align-items-center px-3">
+            <a class="nav-link dropdown-toggle" href="#" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user">
+                </i>
+                admin
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">                        
+                <li><a class="dropdown-item" th:href="@{/form/submit}">sub menu1</a></li>
+                <li><a class="dropdown-item" th:href="@{/user?link=submenu2}">sub menu2</a></li>
+            </ul>
+            <a class="p-1" th:href="@{/user/logout}">
+                <i class="fa fa-sign-out"></i>
+            </a>
+        </div>
     </nav>
-    <div class="form-container">
-        <form class="form" th:action="@{/form/submit}" method="post" enctype="multipart/form-data" >
+    <div class="col-auto row ">
+        <form class="col-sm-6 p-5 bg-light position-absolute h-100 d-flex flex-column justify-content-center " style="right:0px;top:0px;" th:action="@{/form/submit}" method="post" enctype="multipart/form-data" >
             <div class="header-center" >
                 <h1>Form1</h1>
             </div>
-            <div class="field align">
-                <label>text field:</label>
-                <input required type="text" th:placeholder="${form.textField}" th:value="${form.textField}" name="textfield" >
-            </div>
-            <div class="align">
-                <label>radio button:</label>
-                <div class="align-width" >
-                    <input required type="radio" th:value="${form.radioBtn}" name="radiobtn" >
+            <div class="bg-success text-white p-2 my-1" th:if="${form.submited}">form submitted with success</div>
+            <div class="bg-danger text-white p-2 my-1" th:if="${form.error}!=''" th:text="${form.error}"></div>
+            <div class="form-group row my-2">
+                <label class="col-sm-4 col-form-label col-form-label-sm" >text field:</label>
+                <div class="col-sm-8" >
+                    <input class="form-control form-control-sm"  required type="text" th:placeholder="${form.textField}" th:value="${form.textField}" name="textfield" >
                 </div>
             </div>
-            <div class="read-only field align">
-                <label >read only input</label>
-                <input required class="no-select" type="text" name="readonlyfield" th:value="${form.readOnlyInput}" readonly >
-            </div>
-            <div class="align" >
-                <label>file input:</label>
-                <div class="align-width">
-                    <input required type="file" name="file" >
+            <div class="form-group row my-2">
+                <label class="col-sm-4 col-form-label col-form-label-sm" >radio button:</label>
+                <div class="col-sm-8" >
+                    <input  type="radio" value="true"  name="radiobtn" th:checked="${form.radioBtn}? 'checked' : 'false' ">
+                    <label for="">true</label>
+                    <input  type="radio" value="false"  name="radiobtn" th:checked="${!form.radioBtn}? 'checked' : 'false' ">
+                    <label for="">false</label>
                 </div>
             </div>
-            <div class="align" >
-                <label>autocomplete field:</label>
-                <div class="align-width">
-                    <div class="auto field">
-                        <input required id="text"  type="text" onkeydown="fetchData()" placeholder="type anything" name="autocomplete" >
-                        <div class="data-list" id="data" >
-                
-                        </div>
+            <div class="form-group row my-2">
+                <label class="col-sm-4 col-form-label col-form-label-sm" >read only input</label>
+                <div class="col-sm-8">
+                    <input required class="form-control form-control-sm" type="text" name="readonlyfield" th:value="${form.readOnlyInput}" readonly >
+                </div>
+            </div>
+            <div class="form-group row my-2" >
+                <label class="col-sm-4 col-form-label col-form-label-sm" >file input:</label>
+                <div class="col-sm-8">
+                    <input class="form-control form-control-sm" required type="file" name="file" >
+                </div>
+            </div>
+            <div class="form-group row my-2" >
+                <label class="col-sm-4 col-form-label col-form-label-sm" >autocomplete field:</label>
+                <div class="col-sm-8">
+                    <input class="form-control form-control-sm" required id="text"  type="text" onkeydown="fetchData()" placeholder="type anything" name="autocomplete" >
+                    <div class="position-absolute bg-light" style="max-height: 250px!important;overflow-y: scroll;"  id="data" >
+                        <!--inserted data here-->
                     </div>
                 </div>
             </div>
-            <div class="submit-btn">
-                <input type="submit" value="submit">
+            <div class="col-auto align-left d-flex justify-content-end ">
+                <input class="btn btn-primary mb-2 mt-5" type="submit" value="submit">
             </div>
         </form>
     </div>

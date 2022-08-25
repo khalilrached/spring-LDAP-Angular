@@ -6,53 +6,49 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
 <body>
     <!--nav-bar-->
-    <nav class="nav-bar">
-        <a th:href="@{/}"><img src="/img/leoni.png" width="150" alt="logo"></a>
-        <ul class="nav-bar-item">
-            <li><a class="links" th:href="@{/home}">Home</a></li>
-            <li><a class="links" th:href="@{/about}">about</a></li>
-            <li><a class="links" th:href="@{/user?link}">User</a></li>
-            <li id="menu" ><a href="#menu"><img height="30px" src="img/menu.png"></a></li>
-            <li class="bar-menu-container">
-                <ul class="bar-menu nav-bar-item">
-                    <li class="nav-btns">
-                        <div class="nav-header">Head1</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head1-link1}">link1</a></li>
-                            <li><a th:href="@{/user?link=head1-link2}">link2</a></li>
-                            <li><a th:href="@{/user?link=head1-link3}">link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-btns">
-                        <div class="nav-header">Head2</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head2-link1}">link</a></li>
-                            <li><a th:href="@{/user?link=head2-link2}">link</a></li>
-                            <li><a th:href="@{/user?link=head2-link3}">link</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-btns">
-                        <div class="nav-header">Head3</div>
-                        <ul class="nav-btns">
-                            <li><a th:href="@{/user?link=head3-link1}">link1</a></li>
-                            <li><a th:href="@{/user?link=head3-link2}">link2</a></li>
-                            <li><a th:href="@{/user?link=head3-link3}">link3</a></li>
-                        </ul>
-                    </li>                  
+    <nav class="navbar navbar navbar-expand-lg navbar-dark" style="z-index: 1000;background-color: rgb(33, 33, 33);" >
+        <a class="navbar-brand px-2" th:href="@{/}"><img src="/img/leoni.png" width="120" alt="logo"></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-link active" ><a th:href="@{/home}">Home</a></li>
+                <li class="nav-link" ><a th:href="@{/about}">about</a></li>
+                <li class="nav-link" ><a th:href="@{/user?link}">User</a></li>
+            </ul>
+        </div>
+        <div class="d-flex px-3">
+            <div class="nav-link" th:if="${!user.connected}">
+                <a th:href="@{/loginpage}">
+                    <i class="fa fa-user">
+                    </i>
+                    connect
+                </a>
+            </div>
+            <div th:if="${user.connected}" class="dropdown d-flex align-items-center">
+                <a class="nav-link dropdown-toggle" href="#" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-user">
+                    </i>
+                    admin
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">                        
+                    <li><a class="dropdown-item" th:href="@{/form/submit}">sub menu1</a></li>
+                    <li><a class="dropdown-item" th:href="@{/user?link=submenu2}">sub menu2</a></li>
                 </ul>
-            </li>
-        </ul>
+                <a class="p-1" th:href="${/user/logout}">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
+        </div>
     </nav>
     <!--end-of-nav-bar-->
     <!--home-->
-    <div class="home container" >
-        <div class="welcome container">
-            <h1 id="welcome-title">Welcome to leoni</h1>
-        </div>
+    <div class="d-flex col-sm-12 h-100 position-absolute justify-content-center align-items-center" style="top:0px; overflow: hidden;" >
+        <h1 class="position-absolute bg-dark text-light p-2" style="bottom: 100px;">Welcome to LEONI page!</h1>
     </div>
     <!--end home-->
     <script src="/js/main.js"></script>

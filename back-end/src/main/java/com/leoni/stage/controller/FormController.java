@@ -38,11 +38,12 @@ public class FormController {
 
     @ResponseBody
     @PostMapping("/submit")
-    public String handleSubmission(@RequestParam("file") MultipartFile file,
+    public ModelAndView handleSubmission(@RequestParam("file") MultipartFile file,
                                    @RequestParam("textfield") String text,
                                    @RequestParam("readonlyfield") String readonlyField ,
                                    @RequestParam("radiobtn") Boolean radiobtn,
-                                   @RequestParam("autocomplete") String autocomplete)
+                                   @RequestParam("autocomplete") String autocomplete,
+                                    Model model)
     {
         logger.debug("file: "+file.getOriginalFilename());
         try{
@@ -53,9 +54,17 @@ public class FormController {
             logger.debug("file: "+file.getOriginalFilename());
             logger.debug("autocomplete: "+autocomplete);
             storageService.save(file);
-            return form.toString();
+            form = new FormModel();
+            model.addAllAttributes(form.view());
+            model.addAttribute("submited",true);
+            model.addAttribute("error","");
+            return new ModelAndView("user/submit","form",model);
         }catch(Exception e){
-            return e.toString();
+            form = new FormModel();
+            model.addAllAttributes(form.view());
+            model.addAttribute("submited",false);
+            model.addAttribute("error",e.toString());
+            return new ModelAndView("user/submit","form",model);
         }
     }
 
@@ -63,6 +72,8 @@ public class FormController {
     public ModelAndView acceptSubmission(@NotNull Model model){
         FormModel form = new FormModel();
         model.addAllAttributes(form.view());
+        model.addAttribute("submited",false);
+        model.addAttribute("error","");
         return new ModelAndView("user/submit","form",model);
     }
 

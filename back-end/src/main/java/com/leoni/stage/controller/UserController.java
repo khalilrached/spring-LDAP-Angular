@@ -16,17 +16,17 @@ public class UserController {
     Logger logger = LogManager.getLogger(UserController.class);
 
     @RequestMapping("/home")
-    public String home(){
+    public ModelAndView home(Model model){
         logger.info("info level work");
         logger.debug("debug level work");
         logger.warn("warn level work");
-        return "home";
+        model.addAttribute("connected",false);
+        return  new ModelAndView("home","user",model);
     }
     @RequestMapping("/about")
-    public ModelAndView about(){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("about");
-        return mav;
+    public ModelAndView about(Model model){
+        model.addAttribute("connected",false);
+        return  new ModelAndView("about","user",model);
     }
 
     @RequestMapping("/loginpage")
@@ -38,9 +38,8 @@ public class UserController {
 
     @RequestMapping("/user")
     public ModelAndView userPage(@RequestParam String link, Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("message",link);
-        mav.setViewName("user/userdata");
-        return mav;
+        model.addAttribute("message",link);
+        model.addAttribute("connected",true);
+        return new ModelAndView("user/userdata","user",model);
     }
 }
