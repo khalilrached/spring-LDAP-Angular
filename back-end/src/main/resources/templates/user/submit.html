@@ -1,22 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>form submit</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!--nav-bar-->
     <nav class="nav-bar">
         <a th:href="@{/}"><img src="/img/leoni.png" width="150" alt="logo"></a>
         <ul class="nav-bar-item">
             <li><a class="links" th:href="@{/home}">Home</a></li>
             <li><a class="links" th:href="@{/about}">about</a></li>
             <li><a class="links" th:href="@{/user?link}">User</a></li>
-            <li id="menu" ><a href="#menu"><img height="30px" src="img/menu.png"></a></li>
+            <li onclick="showMenu(this)" id="menu" ><a href="#menu">admin</a></li>
             <li class="bar-menu-container">
                 <ul class="bar-menu nav-bar-item">
                     <li class="nav-btns">
@@ -42,19 +38,52 @@
                             <li><a th:href="@{/user?link=head3-link2}">link2</a></li>
                             <li><a th:href="@{/user?link=head3-link3}">link3</a></li>
                         </ul>
-                    </li>                  
+                    </li>
                 </ul>
             </li>
         </ul>
     </nav>
-    <!--end-of-nav-bar-->
-    <!--home-->
-    <div class="home container" >
-        <div class="welcome container">
-            <h1 id="welcome-title">Welcome to leoni</h1>
-        </div>
+    <div class="form-container">
+        <form class="form" th:action="@{/form/submit}" method="post" enctype="multipart/form-data" >
+            <div class="header-center" >
+                <h1>Form1</h1>
+            </div>
+            <div class="field align">
+                <label>text field:</label>
+                <input required type="text" th:placeholder="${form.textField}" th:value="${form.textField}" name="textfield" >
+            </div>
+            <div class="align">
+                <label>radio button:</label>
+                <div class="align-width" >
+                    <input required type="radio" th:value="${form.radioBtn}" name="radiobtn" >
+                </div>
+            </div>
+            <div class="read-only field align">
+                <label >read only input</label>
+                <input required class="no-select" type="text" name="readonlyfield" th:value="${form.readOnlyInput}" readonly >
+            </div>
+            <div class="align" >
+                <label>file input:</label>
+                <div class="align-width">
+                    <input required type="file" name="file" >
+                </div>
+            </div>
+            <div class="align" >
+                <label>autocomplete field:</label>
+                <div class="align-width">
+                    <div class="auto field">
+                        <input required id="text"  type="text" onkeydown="fetchData()" placeholder="type anything" name="autocomplete" >
+                        <div class="data-list" id="data" >
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="submit-btn">
+                <input type="submit" value="submit">
+            </div>
+        </form>
     </div>
-    <!--end home-->
     <script src="/js/main.js"></script>
 </body>
 </html>
