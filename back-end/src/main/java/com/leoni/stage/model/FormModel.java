@@ -7,10 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Setter
@@ -19,37 +17,45 @@ public class FormModel {
 
     private Logger logger = LogManager.getLogger(FormModel.class);
 
-    private String shortTextField;
-    private Boolean radioButton;
-    private String readOnlyTextInput;
-    private MultipartFile fileInput;
-    private String autoCompleteField;
-    public List<String> autoCompleteData = new ArrayList<>();
+    private String textField;
+    private Boolean checkBox;
+    private Date datePicked;
+    private String selectedData;
+    private List<String> multiSelectedData = new ArrayList<>();
+
+    private List<String> selectFieldData = new ArrayList<>();
+    private Map<String,String> multiSelectData = new HashMap<>();
 
 
     public FormModel(){
-        this.shortTextField = "undefined";
-        this.radioButton = false;
-        this.readOnlyTextInput = "exp: fetched data from db!";
-        this.fileInput = null;
-        this.autoCompleteField = "nothing";
-        this.fetchAutoCompleteData();
+        this.textField = "text area";
+        this.checkBox = false;
+        this.datePicked = new Date();
+        this.fetchSelectFieldData();
+        this.fetchMultiSelectData();
+
+        String list = "2,4";
+
+        this.selectedData = this.selectFieldData.get(3);
+        this.multiSelectedData = this.getFromMultiSelectData(list);
     }
 
 
-    public FormModel(String shortTextField,
-                     Boolean radioButton,
-                     MultipartFile fileInput,
-                     String autoCompleteField){
-        this.shortTextField = shortTextField;
-        this.radioButton = radioButton ;
-        this.readOnlyTextInput = "exp: fetched data from db!";
-        this.fileInput = fileInput;
-        this.autoCompleteField = autoCompleteField;
-        this.fetchAutoCompleteData();
+    public FormModel(String txtField,
+                     Boolean chkBox,
+                     Date date,
+                     int indexOfSelectedData,
+                     String indexesOfMultiselect){
+        this.textField = txtField;
+        this.checkBox = chkBox;
+        this.datePicked = date;
+        this.fetchMultiSelectData();
+        this.fetchSelectFieldData();
+        this.selectedData = selectFieldData.get(indexOfSelectedData);
+        this.multiSelectedData = this.getFromMultiSelectData(indexesOfMultiselect);
     }
 
-    public void fetchAutoCompleteData(){
+    public void fetchSelectFieldData(){
         ArrayList<String> data = new ArrayList<>();
         data.add("value1");
         data.add("value2");
@@ -60,65 +66,54 @@ public class FormModel {
         data.add("value7");
         data.add("value8");
         data.add("value9");
-        data.add("value01");
-        data.add("value02");
-        data.add("item1");
-        data.add("item2");
-        data.add("item3");
-        data.add("item4");
-        data.add("item5");
-        data.add("item6");
-        data.add("item7");
-        data.add("item8");
-        data.add("item9");
-        data.add("item01");
-        data.add("string1");
-        data.add("string2");
-        data.add("string3");
-        data.add("string4");
-        data.add("string5");
-        data.add("string6");
-        data.add("string7");
-        data.add("string8");
-        autoCompleteData=data;
+        this.selectFieldData = data;
     }
 
-    public void setReadOnlyTextInput(String readOnlyTextInput) {
-        logger.warn("this is read only field!");
+    public void fetchMultiSelectData(){
+        HashMap<String,String> data = new HashMap<>();
+        data.put("1","value1");
+        data.put("2","value2");
+        data.put("5","value3");
+        data.put("4","value4");
+        data.put("8","value5");
+        data.put("6","value6");
+        data.put("7","value7");
+        this.multiSelectData = data;
     }
 
-    public List<String> matchAutoCompleteData(String searchToken){
-        AtomicReference<List<String>> _TEMP_REF = new AtomicReference<>();
-        _TEMP_REF.set(new ArrayList<>());
-        autoCompleteData.forEach(data -> {
-            if(data.contains(searchToken)){
-                List<String> _TEMP_LIST = _TEMP_REF.get();
-                _TEMP_LIST.add(data);
-                _TEMP_REF.set(_TEMP_LIST);
-            }
+    public List<String> getFromMultiSelectData(String indexes ){
+        AtomicReference<List<String>> selected = new AtomicReference<>();
+        selected.set(new ArrayList<>());
+        List<String> list = Arrays.stream(indexes.split(",")).toList();
+        list.forEach((index)->{
+            selected.get().add(this.multiSelectData.get(index));
         });
-        return _TEMP_REF.get();
+        return selected.get();
     }
 
-    public Map<String,Object> view(){
-        HashMap<String,Object> attributes = new HashMap<>();
-        attributes.put("textField",this.shortTextField);
-        attributes.put("radioBtn",this.radioButton);
-        attributes.put("readOnlyInput",this.readOnlyTextInput);
-        return attributes;
+    public Map<String,Object> render(){
+        HashMap<String,Object> _TEMP = new HashMap<>();
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat DATE_TEMP = new SimpleDateFormat(pattern);
+        _TEMP.put("textField",this.textField);
+        _TEMP.put("checkBox",this.checkBox);
+        _TEMP.put("selctedData",this.selectedData);
+        _TEMP.put("pickedDate",DATE_TEMP.format(this.datePicked));
+        _TEMP.put("multiSelectedData",this.multiSelectedData);
+        _TEMP.put("multiSelectData",this.multiSelectData);
+        _TEMP.put("selectFieldData",this.selectFieldData);
+        return _TEMP;
     }
 
     @Override
     public String toString(){
         return
                 "{" +
-                    "\"shortTextField\":\"" +this.shortTextField+"\","+
-                    "\"readOnlyTextInput\":\"" +this.readOnlyTextInput+"\","+
-                    "\"radioButton\":"+this.radioButton+","+
-                    "\"file\":" +"{" +
-                                    "\"fileName\":\"" +this.fileInput.getOriginalFilename()+
-                                "\"}," +
-                    "\"autoComplete\":\""+this.autoCompleteField+"\n"+
+                    "\"textField\":\"" +this.textField+"\","+
+                    "\"checkBox\":\"" +this.checkBox+"\","+
+                    "\"selectedData\":"+this.selectedData+","+
+                    "\"pickedDate\":" +"\""+this.datePicked+"\","+
+                    "\"multiSelectedData\":\""+this.multiSelectedData+"\""+
                 "}";
     }
 }

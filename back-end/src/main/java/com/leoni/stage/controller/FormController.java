@@ -12,66 +12,49 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/form")
 public class FormController {
-    @Autowired
-    FileStorageService storageService;
+
     Logger logger = LogManager.getLogger(FormController.class);
+    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
     FormModel form = new FormModel();
-
-
-    @ResponseBody
-    @GetMapping(path = "/autoCompleteData/{val}")
-    public List<String> matchTokenFromData(@PathVariable String val){
-        return this.form.matchAutoCompleteData(val);
-    }
-
-    @ResponseBody
-    @GetMapping(path = "/autoCompleteData/")
-    public List<String> allData(){
-        return this.form.getAutoCompleteData();
-    }
 
     @ResponseBody
     @PostMapping("/submit")
-    public ModelAndView handleSubmission(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("textfield") String text,
-                                   @RequestParam("readonlyfield") String readonlyField ,
-                                   @RequestParam("radiobtn") Boolean radiobtn,
-                                   @RequestParam("autocomplete") String autocomplete,
-                                    Model model)
+    public ModelAndView handleSubmission(
+        @RequestParam("textfield") String textfield,
+        @RequestParam("checkbox") Boolean checkbox,
+        @RequestParam("selecteddata") Integer selectedindex,
+        @RequestParam("pickeddate") String pickeddate,
+        @RequestParam("selecteddata") String selecteddata,
+        Model model
+    )
     {
-        logger.debug("file: "+file.getOriginalFilename());
         try{
-            FormModel form = new FormModel(text,radiobtn,file,autocomplete);
-            logger.debug("text: "+text);
-            logger.debug("radiobtn: "+radiobtn);
-            logger.debug("readOnlyField: "+readonlyField);
-            logger.debug("file: "+file.getOriginalFilename());
-            logger.debug("autocomplete: "+autocomplete);
-            storageService.save(file);
-            form = new FormModel();
-            model.addAllAttributes(form.view());
+            this.form = new FormModel(textfield,checkbox,simpleDate.parse(pickeddate),selectedindex,selecteddata);
+            model.addAllAttributes(this.form.render());
             model.addAttribute("submited",true);
             model.addAttribute("error","");
-            return new ModelAndView("user/submit","form",model);
-        }catch(Exception e){
-            form = new FormModel();
-            model.addAllAttributes(form.view());
+            logger.debug(this.form.toString());
+
+        }catch (Exception e){
             model.addAttribute("submited",false);
             model.addAttribute("error",e.toString());
-            return new ModelAndView("user/submit","form",model);
+            logger.error(e.toString());
         }
+        return new ModelAndView("user/submit","form",model);
     }
 
     @GetMapping("/submit")
     public ModelAndView acceptSubmission(@NotNull Model model){
-        FormModel form = new FormModel();
-        model.addAllAttributes(form.view());
+        this.form = new FormModel();
+        model.addAllAttributes(this.form.render());
         model.addAttribute("submited",false);
         model.addAttribute("error","");
         return new ModelAndView("user/submit","form",model);
