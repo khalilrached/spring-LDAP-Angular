@@ -48,9 +48,9 @@
             <div class="form-group row my-2">
                 <label class="col-sm-4 col-form-label col-form-label-sm" >check box:</label>
                 <div class="col-sm-8" >
-                    <input id="checkbox1" type="checkbox" value="true"  name="checkbox" th:checked="${form.checkBox}? 'checked' : 'false' ">
+                    <input id="checkbox1" type="radio" value="true"  name="checkbox" th:checked="${form.checkBox}" >
                     <label for="checkbox1">true</label>
-                    <input id="checkbox2" type="checkbox" value="false"  name="checkbox" th:checked="${!form.checkBox}? 'checked' : 'false' ">
+                    <input id="checkbox2" type="radio" value="false"  name="checkbox" th:checked="${!form.checkBox}" >
                     <label for="checkbox2">false</label>
                 </div>
             </div>

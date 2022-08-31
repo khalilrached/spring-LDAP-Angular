@@ -12,19 +12,10 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 @Controller
-public class StageApplication implements CommandLineRunner {
-
-	@Resource
-	FileStorageService storageService;
+public class StageApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StageApplication.class, args);
-	}
-
-	@Override
-	public void run(String... arg) throws Exception {
-		storageService.deleteAll();
-		storageService.init();
 	}
 
 	@RequestMapping("/")

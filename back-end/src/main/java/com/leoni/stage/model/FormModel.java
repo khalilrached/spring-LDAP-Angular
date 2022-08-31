@@ -86,7 +86,9 @@ public class FormModel {
         selected.set(new ArrayList<>());
         List<String> list = Arrays.stream(indexes.split(",")).toList();
         list.forEach((index)->{
-            selected.get().add(this.multiSelectData.get(index));
+            if(index!=null){
+                selected.get().add(this.multiSelectData.get(index));
+            }
         });
         return selected.get();
     }

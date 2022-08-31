@@ -38,7 +38,8 @@ public class FormController {
     {
         try{
             this.form = new FormModel(textfield,checkbox,simpleDate.parse(pickeddate),selectedindex,selecteddata);
-            model.addAllAttributes(this.form.render());
+            FormModel temp = new FormModel();
+            model.addAllAttributes(temp.render());
             model.addAttribute("submited",true);
             model.addAttribute("error","");
             logger.debug(this.form.toString());
@@ -52,9 +53,9 @@ public class FormController {
     }
 
     @GetMapping("/submit")
-    public ModelAndView acceptSubmission(@NotNull Model model){
-        this.form = new FormModel();
-        model.addAllAttributes(this.form.render());
+    public ModelAndView acceptSubmission(Model model){
+        FormModel form = new FormModel();
+        model.addAllAttributes(form.render());
         model.addAttribute("submited",false);
         model.addAttribute("error","");
         return new ModelAndView("user/submit","form",model);
